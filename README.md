@@ -1,4 +1,4 @@
-# Rancher
+# Lord
 
 [![Build Status](https://drone8.rancher.io/api/badges/rancher/rancher/status.svg?branch=master)](https://drone8.rancher.io/rancher/rancher)
 [![Docker Pulls](https://img.shields.io/docker/pulls/rancher/rancher.svg)](https://store.docker.com/community/images/rancher/rancher)
