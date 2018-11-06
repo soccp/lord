@@ -1,3 +1,0 @@
-PyYAML==3.11
-semver==2.7.7
-flake8
