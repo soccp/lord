@@ -22,7 +22,7 @@ func main() {
 		return
 	}
 	logrus.Info(embedded)
-	logrus.Info(kubeconfig)
+	logrus.Info(kubeConfig)
 	os.Unsetenv("KUBECONFIG")
 	
 	<-ctx.Done()
