@@ -19,7 +19,7 @@ var (
 		Path:    "/v3",
 	}
 
-	Schemas = factory.Schjemas(&Version).
+	Schemas = factory.Schemas(&Version).
 		Init(nativeNodeTypes).
 		Init(nodeTypes).
 		Init(authzTypes).
