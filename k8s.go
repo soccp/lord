@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"os"
 	"github.com/rancher/norman/signal"
 	"github.com/rancher/rancher/k8s"
