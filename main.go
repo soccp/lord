@@ -57,7 +57,7 @@ func main() {
 			Name:        "kubeconfig",
 			Usage:       "Kube config for accessing k8s cluster",
 			EnvVar:      "KUBECONFIG",
-			Value:       "/var/lib/rancher/kube_config_cluster.yml"
+			Value:       "/var/lib/rancher/kube_config_cluster.yml",
 			Destination: &config.KubeConfig,
 		},
 		cli.BoolFlag{
