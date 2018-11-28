@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"syscall"
 	"time"
-    "flag"
     
 	"github.com/docker/docker/pkg/reexec"
 	"github.com/ehazlett/simplelog"
@@ -29,8 +28,6 @@ var (
 )
 
 func main() {
-	flag.Parse()
-	
 	app.RegisterPasswordResetCommand()
 	app.RegisterEnsureDefaultAdminCommand()
 	if reexec.Init() {
@@ -93,7 +90,7 @@ func main() {
 		cli.StringFlag{
 			Name:  "log-format",
 			Usage: "Log formatter used (json, text, simple)",
-			Value: "simple",
+			Value: "text",
 		},
 		cli.StringSliceFlag{
 			Name:  "acme-domain",
