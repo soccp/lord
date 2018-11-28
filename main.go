@@ -10,7 +10,8 @@ import (
 	"path/filepath"
 	"syscall"
 	"time"
-    
+	
+    "k8s.io/client-go/tools/clientcmd"
 	"github.com/docker/docker/pkg/reexec"
 	"github.com/ehazlett/simplelog"
 	"github.com/rancher/norman/pkg/dump"
@@ -56,6 +57,7 @@ func main() {
 			Name:        "kubeconfig",
 			Usage:       "Kube config for accessing k8s cluster",
 			EnvVar:      "KUBECONFIG",
+			Value:       "/var/lib/rancher/kube_config_cluster.yml"
 			Destination: &config.KubeConfig,
 		},
 		cli.BoolFlag{
@@ -180,13 +182,14 @@ func run(cfg app.Config) error {
 	glog.Infof("rancher is starting")
 	dump.GoroutineDumpOn(syscall.SIGUSR1, syscall.SIGILL)
 	ctx := signal.SigTermCancelContext(context.Background())
-
-	embedded, ctx, kubeConfig, err := k8s.GetConfig(ctx, cfg.K8sMode, cfg.KubeConfig)
+    
+    kubeConfig, err := clientcmd.BuildConfigFromFlags("", cfg.KubeConfig)
+	//embedded, ctx, kubeConfig, err := k8s.GetConfig(ctx, cfg.K8sMode, cfg.KubeConfig)
 	if err != nil {
 		return err
 	}
-	cfg.Embedded = embedded
-
+	cfg.Embedded = true
+    
 	os.Unsetenv("KUBECONFIG")
 	kubeConfig.Timeout = 30 * time.Second
 	return app.Run(ctx, *kubeConfig, &cfg)
