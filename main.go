@@ -188,7 +188,7 @@ func run(cfg app.Config) error {
 		return err
 	}
 	cfg.Embedded = true
-    
+    logrus.Info(kubeConfig)
 	os.Unsetenv("KUBECONFIG")
 	kubeConfig.Timeout = 30 * time.Second
 	return app.Run(ctx, *kubeConfig, &cfg)
