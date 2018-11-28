@@ -106,7 +106,7 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		config.NegotiatedSerializer = configConfig.NegotiatedSerializer
 	}
 
-	restClient, err := restwatch.UnversionedRESTClientFor(&config)
+	restClient, err := restwatch.UnversionedRESTClientFor(&config) //is the same as RESTClientFOR,except it allows the config.version is empty
 	if err != nil {
 		return nil, err
 	}

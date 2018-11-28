@@ -42,8 +42,8 @@ var (
 
 type ScaledContext struct {
 	ClientGetter      proxy.ClientGetter
-	LocalConfig       *rest.Config
-	RESTConfig        rest.Config
+	LocalConfig       *rest.Config //*kubeconfig for visiting local k8s
+	RESTConfig        rest.Config   //kubeconfig
 	UnversionedClient rest.Interface
 	K8sClient         kubernetes.Interface
 	APIExtClient      clientset.Interface
