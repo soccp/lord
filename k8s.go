@@ -14,6 +14,7 @@ var (
 )
 
 func main() {
+	logrus.Info("k8s is starting")
 	ctx := signal.SigTermCancelContext(context.Background())
 	_, ctx, _, err := k8s.GetConfig(ctx, "auto", "")
 	if err != nil {
