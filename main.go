@@ -17,7 +17,6 @@ import (
 	"github.com/rancher/norman/pkg/dump"
 	"github.com/rancher/norman/signal"
 	"github.com/rancher/rancher/app"
-	"github.com/rancher/rancher/k8s"
 	"github.com/rancher/rancher/pkg/logserver"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
