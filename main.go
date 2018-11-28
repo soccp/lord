@@ -177,7 +177,7 @@ func initLogs(c *cli.Context, cfg app.Config) {
 func run(cfg app.Config) error {
 	logrus.Infof("Rancher version %s is starting", VERSION)
 	logrus.Infof("Rancher arguments %+v", cfg)
-	glog.Info("rancher is starting")
+	glog.V(2).Info("rancher is starting")
 	dump.GoroutineDumpOn(syscall.SIGUSR1, syscall.SIGILL)
 	ctx := signal.SigTermCancelContext(context.Background())
 
