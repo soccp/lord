@@ -6,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/rancher/norman/signal"
 	"github.com/rancher/rancher/k8s"
+	"github.com/docker/docker/pkg/reexec"
 
 )
 
