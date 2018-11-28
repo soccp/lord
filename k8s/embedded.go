@@ -9,10 +9,12 @@ import (
 	"github.com/rancher/rancher/pkg/embedded"
 	"github.com/rancher/rancher/pkg/kubectl"
 	"k8s.io/client-go/rest"
+	"fmt"
 )
 
 func init() {
 	reexec.Register("/usr/bin/kubectl", kubectl.Main)
+	fmt.Print("reexec kubectl")
 	reexec.Register("kubectl", kubectl.Main)
 	reexec.Register("kubelet", kubectl.Main)
 	reexec.Register("kube-proxy", kubectl.Main)
