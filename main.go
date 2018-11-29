@@ -21,6 +21,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"github.com/golang/glog"
+	"github.com/rancher/rancher/k8s"
 )
 
 var (
@@ -182,8 +183,8 @@ func run(cfg app.Config) error {
 	dump.GoroutineDumpOn(syscall.SIGUSR1, syscall.SIGILL)
 	ctx := signal.SigTermCancelContext(context.Background())
     
-    kubeConfig, err := clientcmd.BuildConfigFromFlags("", cfg.KubeConfig)
-	//embedded, ctx, kubeConfig, err := k8s.GetConfig(ctx, cfg.K8sMode, cfg.KubeConfig)
+    //kubeConfig, err := clientcmd.BuildConfigFromFlags("", cfg.KubeConfig)
+	_, ctx, kubeConfig, err := k8s.GetConfig(ctx, cfg.K8sMode, cfg.KubeConfig)
 	if err != nil {
 		return err
 	}
