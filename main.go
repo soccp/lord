@@ -11,7 +11,6 @@ import (
 	"syscall"
 	"time"
 	
-    "k8s.io/client-go/tools/clientcmd"
 	"github.com/docker/docker/pkg/reexec"
 	"github.com/ehazlett/simplelog"
 	"github.com/rancher/norman/pkg/dump"
@@ -183,7 +182,6 @@ func run(cfg app.Config) error {
 	dump.GoroutineDumpOn(syscall.SIGUSR1, syscall.SIGILL)
 	ctx := signal.SigTermCancelContext(context.Background())
     
-    //kubeConfig, err := clientcmd.BuildConfigFromFlags("", cfg.KubeConfig)
 	_, ctx, kubeConfig, err := k8s.GetConfig(ctx, cfg.K8sMode, cfg.KubeConfig)
 	if err != nil {
 		return err
