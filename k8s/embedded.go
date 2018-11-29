@@ -9,7 +9,6 @@ import (
 	"github.com/rancher/rancher/pkg/embedded"
 	"github.com/rancher/rancher/pkg/kubectl"
 	"k8s.io/client-go/rest"
-	"fmt"
 )
 
 func init() {
