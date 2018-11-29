@@ -200,6 +200,6 @@ func run(cfg app.Config) error {
 	return app.Run(ctx, *kubeConfig, &cfg)
 }
 
-func setupLog(file *File){
+func setupLog(file *os.File){
 	logger = log.New(file, "", log.Ltime|log.Llongfile)
 }
