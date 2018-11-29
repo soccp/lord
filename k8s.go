@@ -17,13 +17,13 @@ var (
 func main() {
 	logrus.Info("k8s is starting")
 	ctx := signal.SigTermCancelContext(context.Background())
-	embedded, ctx, kubeConfig, err := k8s.GetConfig(ctx, "auto", "")
+	_, ctx, _, err := k8s.GetConfig(ctx, "auto", "")
 	if err != nil {
 		logrus.Infof("create k8s failed %s", err)
 		return
 	}
-	logrus.Info(embedded)
-	logrus.Info(kubeConfig)
+	//logrus.Info(embedded)
+	//logrus.Info(kubeConfig)
 	os.Unsetenv("KUBECONFIG")
 	
 	<-ctx.Done()
