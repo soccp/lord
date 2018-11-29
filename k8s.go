@@ -6,7 +6,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/rancher/norman/signal"
 	"github.com/rancher/rancher/k8s"
-	//"github.com/docker/docker/pkg/reexec"
 
 )
 
@@ -22,8 +21,7 @@ func main() {
 		logrus.Infof("create k8s failed %s", err)
 		return
 	}
-	//logrus.Info(embedded)
-	//logrus.Info(kubeConfig)
+
 	os.Unsetenv("KUBECONFIG")
 	
 	<-ctx.Done()
