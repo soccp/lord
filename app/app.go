@@ -46,7 +46,15 @@ func buildScaledContext(ctx context.Context, kubeConfig rest.Config, cfg *Config
 		return nil, nil, err
 	}
 	scaledContext.LocalConfig = &kubeConfig
+	
+	Logger.Println("*********************************************************************************")
+	Logger.Println(scaledContext.Schemas.Versions()[0])
+    Logger.Println(scaledContext.Schemas.SchemasForVersion(scaledContext.Schemas.Versions()[0]))
+    Logger.Println(scaledContext.Schemas.Versions()[1])
     Logger.Println(scaledContext.Schemas.SchemasForVersion(scaledContext.Schemas.Versions()[1]))
+    Logger.Println(scaledContext.Schemas.Versions()[2])
+    Logger.Println(scaledContext.Schemas.SchemasForVersion(scaledContext.Schemas.Versions()[2]))
+    
 	cfg.ListenConfig, err = tls.ReadTLSConfig(cfg.ACMEDomains)
 	if err != nil {
 		return nil, nil, err
