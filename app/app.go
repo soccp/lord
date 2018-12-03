@@ -100,7 +100,7 @@ func Run(ctx context.Context, kubeConfig rest.Config, cfg *Config) error {
 	if err := scaledContext.Start(ctx); err != nil {
 		return err
 	}
-
+    
 	go leader.RunOrDie(ctx, "cattle-controllers", scaledContext.K8sClient, func(ctx context.Context) {
 		if scaledContext.PeerManager != nil {
 			scaledContext.PeerManager.Leader()

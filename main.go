@@ -24,7 +24,6 @@ import (
 
 var (
 	VERSION = "dev"
-	logger *log.Logger
 )
 
 func main() {
@@ -33,15 +32,14 @@ func main() {
 	if reexec.Init() {
 		return
 	}
-	
-	file, err := os.OpenFile("/var/log/rancher.log", os.O_RDWR|os.O_CREATE, 0600)
+    
+    file, err := os.OpenFile("/var/log/rancher.log", os.O_RDWR|os.O_CREATE, 0600)
     if err != nil {
     	logrus.Fatal("create log file rancher.log failed")
     }
-    defer file.Close()
+    defer file.Close()  
+    app.SetupLogger(file)
     
-    setupLog(file)
-    logger.Println("this is a test")
 	os.Unsetenv("SSH_AUTH_SOCK")
 	os.Unsetenv("SSH_AGENT_PID")
 	os.Setenv("DISABLE_HTTP2", "true")
@@ -186,6 +184,8 @@ func initLogs(c *cli.Context, cfg app.Config) {
 func run(cfg app.Config) error {
 	logrus.Infof("Rancher version %s is starting", VERSION)
 	logrus.Infof("Rancher arguments %+v", cfg)
+    app.Logger.Println("rancher is starting")
+    
 	dump.GoroutineDumpOn(syscall.SIGUSR1, syscall.SIGILL)
 	ctx := signal.SigTermCancelContext(context.Background())
     
@@ -198,8 +198,4 @@ func run(cfg app.Config) error {
 	os.Unsetenv("KUBECONFIG")
 	kubeConfig.Timeout = 30 * time.Second
 	return app.Run(ctx, *kubeConfig, &cfg)
-}
-
-func setupLog(file *os.File){
-	logger = log.New(file, "", log.Ltime|log.Llongfile)
 }
