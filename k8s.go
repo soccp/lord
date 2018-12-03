@@ -9,9 +9,6 @@ import (
 
 )
 
-var (
-	VERSION = "dev"
-)
 
 func main() {
 	logrus.Info("k8s is starting")
