@@ -20,7 +20,6 @@ import (
 	"github.com/rancher/types/config"
 	"github.com/sirupsen/logrus"
 	"k8s.io/client-go/rest"
-	"github.com/rancher/rancher/app"
 )
 
 type Config struct {
@@ -47,7 +46,7 @@ func buildScaledContext(ctx context.Context, kubeConfig rest.Config, cfg *Config
 		return nil, nil, err
 	}
 	scaledContext.LocalConfig = &kubeConfig
-    app.Logger.Println(scaledContext.Schemas)
+    Logger.Println(scaledContext.Schemas)
 	cfg.ListenConfig, err = tls.ReadTLSConfig(cfg.ACMEDomains)
 	if err != nil {
 		return nil, nil, err
