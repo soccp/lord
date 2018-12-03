@@ -17,6 +17,7 @@ import (
 	"github.com/rancher/rancher/pkg/tunnelserver"
 	"github.com/rancher/rancher/server"
 	"github.com/rancher/types/apis/management.cattle.io/v3"
+	clusterSchema "github.com/rancher/types/apis/cluster.cattle.io/v3/schema"
 	"github.com/rancher/types/config"
 	"github.com/sirupsen/logrus"
 	"k8s.io/client-go/rest"
@@ -48,12 +49,8 @@ func buildScaledContext(ctx context.Context, kubeConfig rest.Config, cfg *Config
 	scaledContext.LocalConfig = &kubeConfig
 	
 	Logger.Println("*********************************************************************************")
-	Logger.Println(scaledContext.Schemas.Versions()[0])
-    Logger.Println(scaledContext.Schemas.SchemasForVersion(scaledContext.Schemas.Versions()[0]))
-    Logger.Println(scaledContext.Schemas.Versions()[1])
-    Logger.Println(scaledContext.Schemas.SchemasForVersion(scaledContext.Schemas.Versions()[1]))
-    Logger.Println(scaledContext.Schemas.Versions()[2])
-    Logger.Println(scaledContext.Schemas.SchemasForVersion(scaledContext.Schemas.Versions()[2]))
+	Logger.Println("cluster.cattle.io")
+    Logger.Println(scaledContext.Schemas.SchemasForVersion(clusterSchema.Version))
     
 	cfg.ListenConfig, err = tls.ReadTLSConfig(cfg.ACMEDomains)
 	if err != nil {
