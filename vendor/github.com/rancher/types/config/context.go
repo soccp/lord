@@ -96,6 +96,7 @@ func NewScaledContext(config rest.Config) (*ScaledContext, error) {
 	}
 
 	context.K8sClient, err = kubernetes.NewForConfig(&config)
+	
 	if err != nil {
 		return nil, err
 	}
