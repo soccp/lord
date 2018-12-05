@@ -252,7 +252,6 @@ func addRoles(management *config.ManagementContext) (string, error) {
 	// TODO This logic is going to be a problem in an HA setup because a race will cause more than one admin user to be created
 	var admin *v3.User
 	if len(admins.Items) == 0 {
-		Logger.Println("the len of admins is 0")
 		admin, err = management.Management.Users("").Create(&v3.User{
 			ObjectMeta: v1.ObjectMeta{
 				GenerateName: "user-",
@@ -263,7 +262,6 @@ func addRoles(management *config.ManagementContext) (string, error) {
 			Password:           string(hash),
 			MustChangePassword: true,
 		})
-		Logger.Printf("the admin password is %s", string(hash))
 		if err != nil && !apierrors.IsAlreadyExists(err) {
 			return "", errors.Wrap(err, "can not ensure admin user exists")
 		}
