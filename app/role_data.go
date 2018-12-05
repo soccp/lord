@@ -263,7 +263,7 @@ func addRoles(management *config.ManagementContext) (string, error) {
 			Password:           string(hash),
 			MustChangePassword: true,
 		})
-		Logger.Printf("the admin password is %s", string(hash)
+		Logger.Printf("the admin password is %s", string(hash))
 		if err != nil && !apierrors.IsAlreadyExists(err) {
 			return "", errors.Wrap(err, "can not ensure admin user exists")
 		}
