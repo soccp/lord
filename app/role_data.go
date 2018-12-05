@@ -4,7 +4,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rancher/types/apis/management.cattle.io/v3"
 	"github.com/rancher/types/config"
-	"github.com/rancher/rancher/app"
 	"golang.org/x/crypto/bcrypt"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -245,7 +244,7 @@ func addRoles(management *config.ManagementContext) (string, error) {
 
 	set := labels.Set(defaultAdminLabel)
 	admins, err := management.Management.Users("").List(v1.ListOptions{LabelSelector: set.String()})
-	app.Logger.Println(admins)
+	Logger.Println(admins)
 	if err != nil {
 		return "", err
 	}
@@ -253,7 +252,7 @@ func addRoles(management *config.ManagementContext) (string, error) {
 	// TODO This logic is going to be a problem in an HA setup because a race will cause more than one admin user to be created
 	var admin *v3.User
 	if len(admins.Items) == 0 {
-		app.Logger.Println("the len of admins is 0")
+		Logger.Println("the len of admins is 0")
 		admin, err = management.Management.Users("").Create(&v3.User{
 			ObjectMeta: v1.ObjectMeta{
 				GenerateName: "user-",
@@ -264,7 +263,7 @@ func addRoles(management *config.ManagementContext) (string, error) {
 			Password:           string(hash),
 			MustChangePassword: true,
 		})
-		app.Logger.Printf("the admin password is %s", string(hash)
+		Logger.Printf("the admin password is %s", string(hash)
 		if err != nil && !apierrors.IsAlreadyExists(err) {
 			return "", errors.Wrap(err, "can not ensure admin user exists")
 		}
@@ -272,7 +271,7 @@ func addRoles(management *config.ManagementContext) (string, error) {
 	} else {
 		admin = &admins.Items[0]
 	}
-    app.Logger.Printf("the name of admin is %s", admin.Name)
+    Logger.Printf("the name of admin is %s", admin.Name)
 	bindings, err := management.Management.GlobalRoleBindings("").List(v1.ListOptions{LabelSelector: set.String()})
 	if err != nil {
 		return "", err
