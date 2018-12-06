@@ -2,10 +2,10 @@ package handler
 
 import (
 	"net/http"
-
+    "fmt"
+    
 	"github.com/rancher/norman/httperror"
 	"github.com/rancher/norman/types"
-	"github.com/rancher/rancher/app"
 )
 
 func CreateHandler(apiContext *types.APIContext, next types.RequestHandler) error {
@@ -15,7 +15,8 @@ func CreateHandler(apiContext *types.APIContext, next types.RequestHandler) erro
 	if err != nil {
 		return err
 	}
-    app.Logger.Printf("the %s is being created", apiContext.Schema)
+	fmt.Printf("the %s is being created", apiContext.Schema)
+	
 	store := apiContext.Schema.Store
 	if store == nil {
 		return httperror.NewAPIError(httperror.NotFound, "no store found")

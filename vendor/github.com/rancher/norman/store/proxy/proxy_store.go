@@ -7,6 +7,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"fmt"
 
 	"github.com/rancher/norman/httperror"
 	"github.com/rancher/norman/pkg/broadcast"
@@ -28,7 +29,6 @@ import (
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/rest"
 	restclientwatch "k8s.io/client-go/rest/watch"
-	"github.com/rancher/rancher/app"
 )
 
 var (
@@ -298,8 +298,8 @@ func getNamespace(apiContext *types.APIContext, opt *types.QueryOptions) string 
 }
 
 func (s *Store) Create(apiContext *types.APIContext, schema *types.Schema, data map[string]interface{}) (map[string]interface{}, error) {
-	app.Logger.Printf("the schema is %s", schema)
-	app.Logger.Printf("the data is %s", data)
+	fmt.Printf("the schema is %s", schema)
+	fmt.Printf("the data is %s", data)
 	if err := s.toInternal(schema.Mapper, data); err != nil {
 		return nil, err
 	}
@@ -328,7 +328,7 @@ func (s *Store) Create(apiContext *types.APIContext, schema *types.Schema, data 
 		})
 
 	_, result, err := s.singleResult(apiContext, schema, req)
-	app.Logger.Printf("the result is %s", result)
+	fmt.Printf("the result is %s", result)
 	return result, err
 }
 
