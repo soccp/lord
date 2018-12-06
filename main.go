@@ -10,16 +10,16 @@ import (
 	"path/filepath"
 	"syscall"
 	"time"
-
+	
 	"github.com/docker/docker/pkg/reexec"
 	"github.com/ehazlett/simplelog"
 	"github.com/rancher/norman/pkg/dump"
 	"github.com/rancher/norman/signal"
 	"github.com/rancher/rancher/app"
-	"github.com/rancher/rancher/k8s"
 	"github.com/rancher/rancher/pkg/logserver"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
+	"github.com/rancher/rancher/k8s"
 )
 
 var (
@@ -32,7 +32,14 @@ func main() {
 	if reexec.Init() {
 		return
 	}
-
+    
+    file, err := os.OpenFile("/var/log/rancher.log", os.O_RDWR|os.O_CREATE, 0600)
+    if err != nil {
+    	logrus.Fatal("create log file rancher.log failed")
+    }
+    defer file.Close()  
+    app.SetupLogger(file)
+    
 	os.Unsetenv("SSH_AUTH_SOCK")
 	os.Unsetenv("SSH_AGENT_PID")
 	os.Setenv("DISABLE_HTTP2", "true")
@@ -55,6 +62,7 @@ func main() {
 			Name:        "kubeconfig",
 			Usage:       "Kube config for accessing k8s cluster",
 			EnvVar:      "KUBECONFIG",
+			Value:       "/var/lib/rancher/kube_config_cluster.yml",
 			Destination: &config.KubeConfig,
 		},
 		cli.BoolFlag{
@@ -89,7 +97,7 @@ func main() {
 		cli.StringFlag{
 			Name:  "log-format",
 			Usage: "Log formatter used (json, text, simple)",
-			Value: "simple",
+			Value: "text",
 		},
 		cli.StringSliceFlag{
 			Name:  "acme-domain",
@@ -176,14 +184,16 @@ func initLogs(c *cli.Context, cfg app.Config) {
 func run(cfg app.Config) error {
 	logrus.Infof("Rancher version %s is starting", VERSION)
 	logrus.Infof("Rancher arguments %+v", cfg)
+    app.Logger.Println("rancher is starting")
+    
 	dump.GoroutineDumpOn(syscall.SIGUSR1, syscall.SIGILL)
 	ctx := signal.SigTermCancelContext(context.Background())
-
-	embedded, ctx, kubeConfig, err := k8s.GetConfig(ctx, cfg.K8sMode, cfg.KubeConfig)
+    
+	_, ctx, kubeConfig, err := k8s.GetConfig(ctx, cfg.K8sMode, cfg.KubeConfig)
 	if err != nil {
 		return err
 	}
-	cfg.Embedded = embedded
+	cfg.Embedded = true
 
 	os.Unsetenv("KUBECONFIG")
 	kubeConfig.Timeout = 30 * time.Second
