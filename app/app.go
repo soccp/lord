@@ -48,9 +48,9 @@ func buildScaledContext(ctx context.Context, kubeConfig rest.Config, cfg *Config
 	}
 	scaledContext.LocalConfig = &kubeConfig
 	
-	Logger.Println("*********************************************************************************")
-	Logger.Println("cluster.cattle.io")
-    Logger.Println(scaledContext.Schemas.SchemasForVersion(clusterSchema.Version)["namespace"])
+	//Logger.Println("*********************************************************************************")
+	//Logger.Println("cluster.cattle.io")
+    //Logger.Println(scaledContext.Schemas.SchemasForVersion(clusterSchema.Version)["namespace"])
     
 	cfg.ListenConfig, err = tls.ReadTLSConfig(cfg.ACMEDomains)
 	if err != nil {
