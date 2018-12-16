@@ -176,7 +176,7 @@ func (s *Server) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 
 func (s *Server) handle(rw http.ResponseWriter, req *http.Request) (*types.APIContext, error) {
 	apiRequest, err := s.Parser(rw, req)
-	fmt.Printf("the aipRequest is %+v", apiRequest)
+	fmt.Printf("the aipRequest is %+v\n", apiRequest)
 	if err != nil {
 		return apiRequest, err
 	}
