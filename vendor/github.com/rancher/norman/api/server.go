@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 	"sync"
+	"fmt"
 
 	"github.com/rancher/norman/api/access"
 	"github.com/rancher/norman/api/builtin"
@@ -175,6 +176,7 @@ func (s *Server) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 
 func (s *Server) handle(rw http.ResponseWriter, req *http.Request) (*types.APIContext, error) {
 	apiRequest, err := s.Parser(rw, req)
+	fmt.Printf("the aipRequest is %+v", apiRequest)
 	if err != nil {
 		return apiRequest, err
 	}

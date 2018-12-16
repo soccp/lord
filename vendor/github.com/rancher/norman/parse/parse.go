@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"regexp"
 	"strings"
-
+    "fmt"
 	"sort"
 
 	"github.com/rancher/norman/api/builtin"
@@ -74,11 +74,13 @@ func Parse(rw http.ResponseWriter, req *http.Request, schemas *types.Schemas, ur
 
 	result := types.NewAPIContext(req, rw, schemas)
 	result.Method = parseMethod(req)
+	fmt.Printf("the result.method is %s", result.Method)
 	result.ResponseFormat = parseResponseFormat(req)
 	result.URLBuilder, _ = urlbuilder.New(req, types.APIVersion{}, schemas)
 
 	// The response format is guarenteed to be set even in the event of an error
 	parsedURL, err := urlParser(schemas, req.URL)
+	fmt.Printf("the parsedURL is %+v", parsedURL)
 	// wait to check error, want to set as much as possible
 
 	result.SubContext = parsedURL.SubContext
@@ -225,6 +227,7 @@ func DefaultResolver(typeName string, apiContext *types.APIContext) error {
 	}
 
 	schema := apiContext.Schemas.Schema(apiContext.Version, typeName)
+	fmt.Printf("the schema is %+v", schema)
 	if schema == nil && (typeName == builtin.Schema.ID || typeName == builtin.Schema.PluralName) {
 		// Schemas are special, we include it as though part of the API request version
 		schema = apiContext.Schemas.Schema(&builtin.Version, typeName)
